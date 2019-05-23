@@ -6,6 +6,10 @@
     <br>
 </p>
 
+[![Latest Stable Version](https://poser.pugx.org/denchotsanov/yii2user/v/stable)](https://packagist.org/packages/denchotsanov/yii2user)
+[![Total Downloads](https://poser.pugx.org/denchotsanov/yii2user/downloads)](https://packagist.org/packages/denchotsanov/yii2user)
+[![Latest Unstable Version](https://poser.pugx.org/denchotsanov/yii2user/v/unstable)](https://packagist.org/packages/denchotsanov/yii2user)
+[![License](https://poser.pugx.org/denchotsanov/yii2user/license)](https://packagist.org/packages/denchotsanov/yii2user)
 
 Flexible user registration and authentication module for Yii2
 
