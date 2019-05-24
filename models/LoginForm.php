@@ -21,6 +21,11 @@ class LoginForm extends Model
      * @var bool remember me
      */
     public $rememberMe = true;
+
+    /**
+     * @var UserModel|null|false UserModel
+     */
+    private $_user = false;
     /**
      * @inheritdoc
      */
@@ -55,8 +60,10 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            if ($user && $user->status === UserStatus::DELETED) {
+            if ($user && $user->status === UserStatus::STATUS_DELETED) {
                 $this->addError($attribute, Yii::t('denchotsanov.user', 'Your account has been deactivated, please contact support for details.'));
+            } elseif ($user && $user->status === UserStatus::STATUS_PENDING) {
+                $this->addError($attribute, Yii::t('denchotsanov.user', 'Your account not confirm, please check your mail or contact support for details.'));
             } elseif (!$user || !$user->validatePassword($this->password)) {
                 $this->addError($attribute, Yii::t('denchotsanov.user', 'Incorrect email or password.'));
             }
@@ -82,9 +89,9 @@ class LoginForm extends Model
      */
     public function getUser()
     {
-        if ($this->user === false) {
-            $this->user = UserModel::findByEmail($this->email);
+        if ($this->_user === false) {
+            $this->_user = UserModel::findByEmail($this->email);
         }
-        return $this->user;
+        return $this->_user;
     }
 }

@@ -39,4 +39,5 @@ return [
     'This email address has already been taken.' => 'This email address has already been taken.',
     'User with this email is not found.' => 'User with this email is not found.',
     'Your account has been deactivated, please contact support for details.' => 'Your account has been deactivated, please contact support for details.',
+    'Your account not confirm, please check your mail or contact support for details.'=>'Your account not confirm, please check your mail or contact support for details.'
 ];
