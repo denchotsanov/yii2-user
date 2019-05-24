@@ -52,7 +52,7 @@ class ResetPasswordForm extends Model
     public function attributeLabels()
     {
         return [
-            'password' => Yii::t('yii2module.user', 'Password'),
+            'password' => Yii::t('denchotsanov.user', 'Password'),
         ];
     }
     /**

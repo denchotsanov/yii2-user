@@ -24,12 +24,12 @@ class PasswordResetRequestForm extends Model
             ['email', 'email'],
             ['email', 'exist',
                 'targetClass' => Yii::$app->user->identityClass,
-                'message' => Yii::t('yii2module.user', 'User with this email is not found.'),
+                'message' => Yii::t('denchotsanov.user', 'User with this email is not found.'),
             ],
             ['email', 'exist',
                 'targetClass' => Yii::$app->user->identityClass,
                 'filter' => ['status' => UserStatus::ACTIVE],
-                'message' => Yii::t('yii2module.user', 'Your account has been deactivated, please contact support for details.'),
+                'message' => Yii::t('denchotsanov.user', 'Your account has been deactivated, please contact support for details.'),
             ],
         ];
     }
@@ -39,7 +39,7 @@ class PasswordResetRequestForm extends Model
     public function attributeLabels()
     {
         return [
-            'email' => Yii::t('yii2module.user', 'Email'),
+            'email' => Yii::t('denchotsanov.user', 'Email'),
         ];
     }
 
@@ -58,7 +58,7 @@ class PasswordResetRequestForm extends Model
                 return Yii::$app->mailer->compose('passwordResetToken', ['user' => $user])
                     ->setFrom([Yii::$app->params['adminEmail'] => Yii::$app->name])
                     ->setTo($this->email)
-                    ->setSubject(Yii::t('yii2module.user', 'Password reset for {0}', Yii::$app->name))
+                    ->setSubject(Yii::t('denchotsanov.user', 'Password reset for {0}', Yii::$app->name))
                     ->send();
             }
         }

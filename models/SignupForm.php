@@ -34,7 +34,7 @@ class SignupForm extends Model
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => UserModel::class, 'message' => Yii::t('yii2module.user', 'This email address has already been taken.')],
+            ['email', 'unique', 'targetClass' => UserModel::class, 'message' => Yii::t('denchotsanov.user', 'This email address has already been taken.')],
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
         ];
@@ -45,8 +45,8 @@ class SignupForm extends Model
     public function attributeLabels()
     {
         return [
-            'email' => Yii::t('yii2module.user', 'Email'),
-            'password' => Yii::t('yii2module.user', 'Password'),
+            'email' => Yii::t('denchotsanov.user', 'Email'),
+            'password' => Yii::t('denchotsanov.user', 'Password'),
         ];
     }
     /**

@@ -39,9 +39,9 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'email' => Yii::t('yii2module.user', 'Email'),
-            'password' => Yii::t('yii2module.user', 'Password'),
-            'rememberMe' => Yii::t('yii2module.user', 'Remember Me'),
+            'email' => Yii::t('denchotsanov.user', 'Email'),
+            'password' => Yii::t('denchotsanov.user', 'Password'),
+            'rememberMe' => Yii::t('denchotsanov.user', 'Remember Me'),
         ];
     }
     /**
@@ -56,9 +56,9 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if ($user && $user->status === UserStatus::DELETED) {
-                $this->addError($attribute, Yii::t('yii2module.user', 'Your account has been deactivated, please contact support for details.'));
+                $this->addError($attribute, Yii::t('denchotsanov.user', 'Your account has been deactivated, please contact support for details.'));
             } elseif (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, Yii::t('yii2module.user', 'Incorrect email or password.'));
+                $this->addError($attribute, Yii::t('denchotsanov.user', 'Incorrect email or password.'));
             }
         }
     }
