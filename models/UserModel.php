@@ -1,15 +1,13 @@
 <?php
-
-
 namespace denchotsanov\user\models;
 
-use denchotsanov\user\models\enums\UserStatus;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
+use denchotsanov\user\models\enums\UserStatus;
 
 /**
  * Class UserModel
@@ -53,12 +51,12 @@ class UserModel extends ActiveRecord implements IdentityInterface
     {
         return [
             [['email'], 'required'],
-            ['email', 'unique', 'message' => Yii::t('yii2module.user', 'This email address has already been taken.')],
+            ['email', 'unique', 'message' => Yii::t('denchotsanov.user', 'This email address has already been taken.')],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['plainPassword', 'string', 'min' => 6],
             ['plainPassword', 'required', 'on' => 'create'],
-            ['status', 'default', 'value' => UserStatus::ACTIVE],
+            ['status', 'default', 'value' => UserStatus::STATUS_PENDING],
             ['status', 'in', 'range' => UserStatus::$list],
         ];
     }
@@ -68,20 +66,27 @@ class UserModel extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'email' => Yii::t('yii2module.user', 'Email'),
-            'status' => Yii::t('yii2module.user', 'Status'),
-            'created_at' => Yii::t('yii2module.user', 'Registration time'),
-            'last_login' => Yii::t('yii2module.user', 'Last login'),
-            'plainPassword' => Yii::t('yii2module.user', 'Password'),
+            'email' => Yii::t('denchotsanov.user', 'Email'),
+            'status' => Yii::t('denchotsanov.user', 'Status'),
+            'created_at' => Yii::t('denchotsanov.user', 'Registration time'),
+            'last_login' => Yii::t('denchotsanov.user', 'Last login'),
+            'plainPassword' => Yii::t('denchotsanov.user', 'Password'),
         ];
     }
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {
         return [
-            TimestampBehavior::class,
+            'timestamp' => [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+                'value' => time(),
+            ],
         ];
     }
     /**
@@ -125,15 +130,15 @@ class UserModel extends ActiveRecord implements IdentityInterface
         throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
     }
     /**
-     * Finds user (with active status) by username
+     * Finds user (with active status) by e-mail
      *
-     * @param  string $username
+     * @param  string $email
      *
      * @return static|null
      */
-    public static function findByUsername($username)
+    public static function findActiveByEmail($email)
     {
-        return static::findOne(['username' => $username, 'status' => UserStatus::ACTIVE]);
+        return static::findOne(['email' => $email, 'status' => UserStatus::STATUS_ACTIVE]);
     }
     /**
      * Finds user by email
@@ -160,7 +165,7 @@ class UserModel extends ActiveRecord implements IdentityInterface
         }
         return static::findOne([
             'password_reset_token' => $token,
-            'status' => UserStatus::ACTIVE,
+            'status' => UserStatus::STATUS_ACTIVE,
         ]);
     }
     /**
