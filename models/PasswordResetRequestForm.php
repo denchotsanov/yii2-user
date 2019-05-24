@@ -28,7 +28,7 @@ class PasswordResetRequestForm extends Model
             ],
             ['email', 'exist',
                 'targetClass' => Yii::$app->user->identityClass,
-                'filter' => ['status' => UserStatus::ACTIVE],
+                'filter' => ['status' => UserStatus::STATUS_ACTIVE],
                 'message' => Yii::t('denchotsanov.user', 'Your account has been deactivated, please contact support for details.'),
             ],
         ];
@@ -51,7 +51,7 @@ class PasswordResetRequestForm extends Model
      */
     public function sendEmail()
     {
-        $user = UserModel::findOne(['status' => UserStatus::ACTIVE, 'email' => $this->email]);
+        $user = UserModel::findOne(['status' => UserStatus::STATUS_ACTIVE, 'email' => $this->email]);
         if (!empty($user)) {
             $user->generatePasswordResetToken();
             if ($user->save()) {
