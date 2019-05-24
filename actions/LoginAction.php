@@ -12,7 +12,7 @@ class LoginAction extends Action
     /**
      * @var string name of the view, which should be rendered
      */
-    public $view = '@vendor/denchotsanov/user/views/login';
+    public $view = '@vendor/denchotsanov/yii2-user/views/login';
     /**
      * @var string Login Form className
      */

@@ -23,7 +23,7 @@ class RequestPasswordResetAction extends Action
     /**
      * @var string name of the view, which should be rendered
      */
-    public $view = '@vendor/denchotsanov/user/views/requestPasswordResetToken';
+    public $view = '@vendor/denchotsanov/yii2-user/views/requestPasswordResetToken';
     /**
      * @var string password reset request form class
      */

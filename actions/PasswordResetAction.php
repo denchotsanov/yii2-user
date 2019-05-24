@@ -24,7 +24,7 @@ class PasswordResetAction extends Action
     /**
      * @var string name of the view, which should be rendered
      */
-    public $view = '@vendor/denchotsanov/user/views/resetPassword';
+    public $view = '@vendor/denchotsanov/yii2-user/views/resetPassword';
     /**
      * @var string reset password model class
      */

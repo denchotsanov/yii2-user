@@ -23,7 +23,7 @@ class SingupAction extends Action
     /**
      * @var string name of the view, which should be rendered
      */
-    public $view = '@vendor/denchotsanov/user/views/signup';
+    public $view = '@vendor/denchotsanov/yii2-user/views/signup';
     /**
      * @var string signup form class
      */
