@@ -13,7 +13,7 @@ class m190523_220351_create_user_table extends Migration
      */
     public function safeUp()
     {
-        if (Yii::$app->db->schema->getTableSchema('user') === null) {
+        if (Yii::$app->db->schema->getTableSchema('user') !== null) {
             $this->renameTable('{{%user}}', '{{%user_old}}');
         }
         $this->createTable('{{%user}}', [
@@ -35,7 +35,7 @@ class m190523_220351_create_user_table extends Migration
      */
     public function safeDown()
     {
-        if (Yii::$app->db->schema->getTableSchema('user_old') === null) {
+        if (Yii::$app->db->schema->getTableSchema('user_old') !== null) {
             $this->renameTable('{{%user}}', '{{%user_old}}');
         }
         $this->dropTable('{{%user}}');
