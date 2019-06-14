@@ -35,9 +35,10 @@ class m190523_220351_create_user_table extends Migration
      */
     public function safeDown()
     {
-        if (Yii::$app->db->schema->getTableSchema('user_old') !== null) {
-            $this->renameTable('{{%user}}', '{{%user_old}}');
-        }
         $this->dropTable('{{%user}}');
+        
+        if (Yii::$app->db->schema->getTableSchema('user_old') !== null) {
+            $this->renameTable('{{%user_old}}', '{{%user}}');
+        }        
     }
 }
