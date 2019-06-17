@@ -58,6 +58,10 @@ class UserModel extends ActiveRecord implements IdentityInterface
             ['plainPassword', 'required', 'on' => 'create'],
             ['status', 'default', 'value' => UserStatus::STATUS_PENDING],
             ['status', 'in', 'range' => UserStatus::$list],
+
+            ['username', 'string', 'min'=> 6],
+            ['username', 'unique','message'=>Yii::t('denchotsanov.user','This username has already been taken.')]
+
         ];
     }
     /**
@@ -71,6 +75,7 @@ class UserModel extends ActiveRecord implements IdentityInterface
             'created_at' => Yii::t('denchotsanov.user', 'Registration time'),
             'last_login' => Yii::t('denchotsanov.user', 'Last login'),
             'plainPassword' => Yii::t('denchotsanov.user', 'Password'),
+            'username' => Yii::t('denchotsanov.user', 'Username'),
         ];
     }
     /**
@@ -140,6 +145,11 @@ class UserModel extends ActiveRecord implements IdentityInterface
     {
         return static::findOne(['email' => $email, 'status' => UserStatus::STATUS_ACTIVE]);
     }
+
+    public static function findActiveByUsername($user)
+    {
+        return static::findOne(['username' => $user, 'status' => UserStatus::STATUS_ACTIVE]);
+    }
     /**
      * Finds user by email
      *
@@ -150,6 +160,11 @@ class UserModel extends ActiveRecord implements IdentityInterface
     public static function findByEmail($email)
     {
         return static::findOne(['email' => $email]);
+    }
+
+    public static function findByUsername($user)
+    {
+        return static::findOne(['email' => $user]);
     }
     /**
      * Finds user by password reset token
