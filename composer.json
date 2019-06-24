@@ -1,6 +1,8 @@
 {
     "name": "denchotsanov/yii2-user",
     "type": "yii2-extenstion",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "authors": [
         {
             "name": "Dencho Tsanov",
