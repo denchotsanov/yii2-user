@@ -3,6 +3,7 @@
 
 namespace denchotsanov\user\models;
 
+use denchotsanov\user\Finder;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
