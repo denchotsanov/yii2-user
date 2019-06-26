@@ -15,6 +15,7 @@
         "yiisoft/yii2": "^2.0.18",
         "yiisoft/yii2-authclient": "^2.1.0",
         "yiisoft/yii2-jui": "~2.0",
+        "yiisoft/yii2-bootstrap": "^2.0.0",
         "2amigos/yii2-arrayquery-component": "~1.0"
     },
     "autoload": {
