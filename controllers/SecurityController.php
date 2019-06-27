@@ -9,6 +9,7 @@ namespace denchotsanov\user\controllers;
 use denchotsanov\user\Finder;
 use denchotsanov\user\models\Account;
 use denchotsanov\user\models\LoginForm;
+use denchotsanov\user\models\User;
 use denchotsanov\user\Module;
 use denchotsanov\user\traits\AjaxValidationTrait;
 use denchotsanov\user\traits\EventTrait;
@@ -85,6 +86,7 @@ class SecurityController extends Controller
     /**
      * @return string|Response
      * @throws \yii\base\InvalidConfigException
+     * @throws Yii\base\ExitException
      */
     public function actionLogin()
     {
@@ -105,14 +107,14 @@ class SecurityController extends Controller
             'module' => $this->module,
         ]);
     }
+
     /**
-     * Logs the user out and then redirects to the homepage.
-     *
      * @return Response
+     * @throws \yii\base\InvalidConfigException
      */
     public function actionLogout()
     {
-        $event = $this->getUserEvent(\Yii::$app->user->identity);
+        $event = $this->getUserEvent(Yii::$app->user->identity);
         $this->trigger(self::EVENT_BEFORE_LOGOUT, $event);
         \Yii::$app->getUser()->logout();
         $this->trigger(self::EVENT_AFTER_LOGOUT, $event);

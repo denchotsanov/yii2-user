@@ -1,6 +1,12 @@
 <?php
 namespace denchotsanov\user\traits;
 
+use denchotsanov\user\events\AuthEvent;
+use denchotsanov\user\events\ConnectEvent;
+use denchotsanov\user\events\FormEvent;
+use denchotsanov\user\events\ProfileEvent;
+use denchotsanov\user\events\ResetPasswordEvent;
+use denchotsanov\user\events\UserEvent;
 use denchotsanov\user\models\Account;
 use denchotsanov\user\models\Profile;
 use denchotsanov\user\models\RecoveryForm;

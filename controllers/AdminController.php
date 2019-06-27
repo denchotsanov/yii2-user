@@ -1,6 +1,7 @@
 <?php
 namespace denchotsanov\user\controllers;
 
+use denchotsanov\user\filters\AccessRule;
 use denchotsanov\user\Finder;
 use denchotsanov\user\models\Profile;
 use denchotsanov\user\models\User;
@@ -135,6 +136,7 @@ class AdminController extends Controller
      *
      * @throws ExitException
      * @throws NotFoundHttpException
+     * @throws yii\base\InvalidConfigException
      */
     public function actionUpdate($id)
     {
@@ -206,6 +208,7 @@ class AdminController extends Controller
      * @return string
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
+     * @throws yii\base\InvalidConfigException
      */
     public function actionSwitch($id = null)
     {
@@ -253,6 +256,7 @@ class AdminController extends Controller
      *
      * @return Response
      * @throws NotFoundHttpException
+     * @throws yii\base\InvalidConfigException
      */
     public function actionConfirm($id)
     {
@@ -293,6 +297,7 @@ class AdminController extends Controller
      *
      * @return Response
      * @throws NotFoundHttpException
+     * @throws yii\base\InvalidConfigException
      */
     public function actionBlock($id)
     {
