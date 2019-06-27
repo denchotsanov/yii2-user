@@ -12,48 +12,47 @@ use yii\db\ActiveRecord;
 use yii\helpers\Json;
 use yii\helpers\Url;
 /**
- * @property integer $id          Id
- * @property integer $user_id     User id, null if account is not bind to user
- * @property string  $provider    Name of service
- * @property string  $client_id   Account id
- * @property string  $data        Account properties returned by social network (json encoded)
- * @property string  $decodedData Json-decoded properties
+ * @property integer $id
+ * @property integer $user_id
+ * @property string  $provider
+ * @property string  $client_id
+ * @property string  $data
+ * @property string  $decodedData
  * @property string  $code
  * @property integer $created_at
  * @property string  $email
  * @property string  $username
  *
- * @property User    $user        User that this account is connected for.
+ * @property User    $user
  *
  */
 class Account extends ActiveRecord
 {
     use ModuleTrait;
-    /** @var Finder */
     protected static $finder;
-    /** @var */
     private $_data;
-    /** @inheritdoc */
     public static function tableName()
     {
         return '{{%social_account}}';
     }
+
     /**
-     * @return User
+     * @return \yii\db\ActiveQuery
      */
     public function getUser()
     {
         return $this->hasOne($this->module->modelMap['User'], ['id' => 'user_id']);
     }
     /**
-     * @return bool Whether this social account is connected to user.
+     * @return bool
      */
     public function getIsConnected()
     {
         return $this->user_id != null;
     }
+
     /**
-     * @return mixed Json decoded properties.
+     * @return mixed
      */
     public function getDecodedData()
     {
@@ -92,9 +91,15 @@ class Account extends ActiveRecord
     {
         return Yii::createObject(AccountQuery::class, [get_called_class()]);
     }
+
+    /**
+     * @param BaseClientInterface $client
+     * @return Account|object
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\db\Exception
+     */
     public static function create(BaseClientInterface $client)
     {
-        /** @var Account $account */
         $account = Yii::createObject([
             'class'      => static::class,
             'provider'   => $client->getId(),
@@ -167,7 +172,6 @@ class Account extends ActiveRecord
      *
      * @return User|bool False when can't create user.
      * @throws \yii\base\InvalidConfigException
-     * @throws \yii\db\Exception
      */
     protected static function fetchUser(Account $account)
     {

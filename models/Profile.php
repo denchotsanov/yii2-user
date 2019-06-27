@@ -5,13 +5,13 @@ namespace denchotsanov\user\models;
 
 
 use DateTime;
+use DateTimeZone;
+use denchotsanov\user\traits\ModuleTrait;
 use Exception;
 use Yii;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "profile".
- *
  * @property integer $user_id
  * @property string  $name
  * @property string  $public_email
@@ -22,11 +22,10 @@ use yii\db\ActiveRecord;
  * @property string  $bio
  * @property string  $timezone
  * @property User    $user
- *
  */
 class Profile extends ActiveRecord
 {
-
+    use ModuleTrait;
     protected $module;
     /** @inheritdoc */
     public function init()
@@ -34,7 +33,6 @@ class Profile extends ActiveRecord
         $this->module = Yii::$app->getModule('user');
     }
     /**
-     * Returns avatar url or null if avatar is not set.
      * @param  int $size
      * @return string|null
      */
@@ -90,8 +88,6 @@ class Profile extends ActiveRecord
         ];
     }
     /**
-     * Validates the timezone attribute.
-     * Adds an error when the specified time zone doesn't exist.
      * @param string $attribute the attribute being validated
      * @param array $params values for the placeholders in the error message
      */
@@ -102,31 +98,28 @@ class Profile extends ActiveRecord
         }
     }
     /**
-     * Get the user's time zone.
-     * Defaults to the application timezone if not specified by the user.
      * @return \DateTimeZone
      */
     public function getTimeZone()
     {
         try {
-            return new \DateTimeZone($this->timezone);
+            return new DateTimeZone($this->timezone);
         } catch (Exception $e) {
-            // Default to application time zone if the user hasn't set their time zone
-            return new \DateTimeZone(Yii::$app->timeZone);
+            return new DateTimeZone(Yii::$app->timeZone);
         }
     }
+
     /**
-     * Set the user's time zone.
-     * @param \DateTimeZone $timezone the timezone to save to the user's profile
+     * @param DateTimeZone $timeZone
      */
-    public function setTimeZone(\DateTimeZone $timeZone)
+    public function setTimeZone(DateTimeZone $timeZone)
     {
         $this->setAttribute('timezone', $timeZone->getName());
     }
 
     /**
      * Converts DateTime to user's local time
-     * @param DateTime the datetime to convert
+     * @param DateTime|null $dateTime
      * @return DateTime
      * @throws Exception
      */

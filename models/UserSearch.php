@@ -8,29 +8,16 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-/**
- * UserSearch represents the model behind the search form about User.
- */
 class UserSearch extends Model
 {
-    /** @var integer */
     public $id;
-    /** @var string */
     public $username;
-    /** @var string */
     public $email;
-    /** @var int */
     public $created_at;
-    /** @var int */
     public $last_login_at;
-    /** @var string */
     public $registration_ip;
-    /** @var Finder */
     protected $finder;
-    /**
-     * @param Finder $finder
-     * @param array  $config
-     */
+
     public function __construct(Finder $finder, $config = [])
     {
         $this->finder = $finder;

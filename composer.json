@@ -11,6 +11,7 @@
     ],
     "require": {
         "php": "^7.0",
+        "ext-json": "*",
         "fxp/composer-asset-plugin":"^1.4.0",
         "yiisoft/yii2": "^2.0.18",
         "yiisoft/yii2-authclient": "^2.1.0",

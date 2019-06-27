@@ -10,8 +10,6 @@ use yii\db\ActiveRecord;
 use yii\helpers\Url;
 
 /**
- * Token Active Record model.
- *
  * @property integer $user_id
  * @property string  $code
  * @property integer $created_at

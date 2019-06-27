@@ -62,11 +62,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     const OLD_EMAIL_CONFIRMED = 0b1;
     const NEW_EMAIL_CONFIRMED = 0b10;
-    /** @var string Plain password. Used for model validation. */
     public $password;
-    /** @var Profile|null */
     private $_profile;
-    /** @var string Default username regexp */
     public static $usernameRegexp = '/^[-a-zA-Z0-9_\.@]+$/';
 
     /** @inheritdoc */
@@ -94,7 +91,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return bool Whether the user is confirmed or not.
+     * @return bool
      */
     public function getIsConfirmed()
     {
@@ -102,7 +99,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return bool Whether the user is blocked or not.
+     * @return bool
      */
     public function getIsBlocked()
     {
@@ -110,7 +107,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return bool Whether the user is an admin or not.
+     * @return bool
      */
     public function getIsAdmin()
     {
@@ -137,13 +134,12 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return Account[] Connected accounts ($provider => $account)
+     * @return Account[]
      */
     public function getAccounts()
     {
         $connected = [];
         $accounts = $this->hasMany($this->module->modelMap['Account'], ['user_id' => 'id'])->all();
-        /** @var Account $account */
         foreach ($accounts as $account) {
             $connected[$account->provider] = $account;
         }
@@ -151,7 +147,6 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Returns connected account by provider.
      * @param string $provider
      * @return Account|null
      */
@@ -248,9 +243,6 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Creates new user account. If Module::enableGeneratingPassword is set true, this method
-     * will generate password.
-     *
      * @return bool
      * @throws Exception
      */
@@ -280,9 +272,6 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * This method is used to register new user account. If Module::enableConfirmation is set true, this method
-     * will generate new confirmation token and use mailer to send it to the user.
-     *
      * @return bool
      * @throws Exception
      */
@@ -363,8 +352,6 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function attemptEmailChange($code)
     {
-        // TODO refactor method
-        /** @var Token $token */
         $token = $this->finder->findToken([
             'user_id' => $this->id,
             'code' => $code,
@@ -412,7 +399,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Confirms the user by setting 'confirmed_at' field to current time.
+     * @return bool
      */
     public function confirm()
     {
@@ -434,7 +421,8 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Blocks the user by setting 'blocked_at' field to current time and regenerates auth_key.
+     * @return bool
+     * @throws \yii\base\Exception
      */
     public function block()
     {
@@ -445,7 +433,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * UnBlocks the user by setting 'blocked_at' field to null.
+     * @return bool
      */
     public function unblock()
     {
@@ -453,8 +441,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Generates new username based on email address, or creates new username
-     * like "emailuser1".
+     * @return string
      */
     public function generateUsername()
     {
@@ -464,14 +451,12 @@ class User extends ActiveRecord implements IdentityInterface
         if ($this->validate(['username'])) {
             return $this->username;
         }
-        // valid email addresses are less restricitve than our
-        // valid username regexp so fallback to 'user123' if needed:
         if (!preg_match(self::$usernameRegexp, $username)) {
             $username = 'user';
         }
         $this->username = $username;
         $max = $this->finder->userQuery->max('id');
-        // generate username like "user1", "user2", etc...
+
         do {
             $this->username = $username . ++$max;
         } while (!$this->validate(['username']));

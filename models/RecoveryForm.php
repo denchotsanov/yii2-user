@@ -94,7 +94,7 @@ class RecoveryForm extends Model
      * @return bool
      * @throws Yii\base\Exception
      * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @throws yii\db\StaleObjectException
      */
     public function resetPassword(Token $token)
     {
@@ -102,7 +102,7 @@ class RecoveryForm extends Model
             return false;
         }
         if ($token->user->resetPassword($this->password)) {
-            Yii::$app->session->setFlash('success', \Yii::t('user', 'Your password has been changed successfully.'));
+            Yii::$app->session->setFlash('success', Yii::t('user', 'Your password has been changed successfully.'));
             $token->delete();
         } else {
             Yii::$app->session->setFlash(
