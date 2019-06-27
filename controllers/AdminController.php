@@ -6,6 +6,7 @@ use denchotsanov\user\models\Profile;
 use denchotsanov\user\models\User;
 use denchotsanov\user\models\UserSearch;
 use denchotsanov\user\Module;
+use denchotsanov\user\traits\EventTrait;
 use yii;
 use yii\base\ExitException;
 use yii\base\Model;
