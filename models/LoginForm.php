@@ -1,97 +1,121 @@
 <?php
 namespace denchotsanov\user\models;
-
-use denchotsanov\user\models\enums\UserStatus;
+use denchotsanov\user\Finder;
+use denchotsanov\user\helpers\Password;
+use denchotsanov\user\traits\ModuleTrait;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 use Yii;
 use yii\base\Model;
-/**
- * Login Form
- */
+
+
 class LoginForm extends Model
 {
-    /**
-     * @var string email
-     */
-    public $email;
-    /**
-     * @var string password
-     */
+    use ModuleTrait;
+    public $login;
     public $password;
-    /**
-     * @var bool remember me
-     */
-    public $rememberMe = true;
-
-    /**
-     * @var UserModel|null|false UserModel
-     */
-    private $_user = false;
-    /**
-     * @inheritdoc
-     */
-    public function rules()
+    public $rememberMe = false;
+    protected $user;
+    protected $finder;
+    public function __construct(Finder $finder, $config = [])
     {
-        return [
-            [['email', 'password'], 'required'],
-            ['email', 'email'],
-            ['password', 'validatePassword'],
-            ['rememberMe', 'boolean'],
-        ];
+        $this->finder = $finder;
+        parent::__construct($config);
     }
     /**
-     * @inheritdoc
+     * @return array
      */
+    public static function loginList()
+    {
+
+        $module = \Yii::$app->getModule('user');
+        $userModel = $module->modelMap['User'];
+        return ArrayHelper::map($userModel::find()->where(['blocked_at' => null])->all(), 'username', function ($user) {
+            return sprintf('%s (%s)', Html::encode($user->username), Html::encode($user->email));
+        });
+    }
+    /** @inheritdoc */
     public function attributeLabels()
     {
         return [
-            'email' => Yii::t('denchotsanov.user', 'Email'),
-            'password' => Yii::t('denchotsanov.user', 'Password'),
-            'rememberMe' => Yii::t('denchotsanov.user', 'Remember Me'),
+            'login'      => Yii::t('user', 'Login'),
+            'password'   => Yii::t('user', 'Password'),
+            'rememberMe' => Yii::t('user', 'Remember me next time'),
         ];
     }
+    /** @inheritdoc */
+    public function rules()
+    {
+        $rules = [
+            'loginTrim' => ['login', 'trim'],
+            'requiredFields' => [['login'], 'required'],
+            'confirmationValidate' => [
+                'login',
+                function ($attribute) {
+                    if ($this->user !== null) {
+                        $confirmationRequired = $this->module->enableConfirmation
+                            && !$this->module->enableUnconfirmedLogin;
+                        if ($confirmationRequired && !$this->user->getIsConfirmed()) {
+                            $this->addError($attribute, Yii::t('user', 'You need to confirm your email address'));
+                        }
+                        if ($this->user->getIsBlocked()) {
+                            $this->addError($attribute, Yii::t('user', 'Your account has been blocked'));
+                        }
+                    }
+                }
+            ],
+            'rememberMe' => ['rememberMe', 'boolean'],
+        ];
+        if (!$this->module->debug) {
+            $rules = array_merge($rules, [
+                'requiredFields' => [['login', 'password'], 'required'],
+                'passwordValidate' => [
+                    'password',
+                    function ($attribute) {
+                        if ($this->user === null || !Password::validate($this->password, $this->user->password_hash)) {
+                            $this->addError($attribute, Yii::t('user', 'Invalid login or password'));
+                        }
+                    }
+                ]
+            ]);
+        }
+        return $rules;
+    }
     /**
-     * Validates the password.
-     * This method serves as the inline validation for password.
-     *
-     * @param $attribute
-     * @param $params
+     * @return void
      */
     public function validatePassword($attribute, $params)
     {
-        if (!$this->hasErrors()) {
-            $user = $this->getUser();
-            if ($user && $user->status === UserStatus::STATUS_DELETED) {
-                $this->addError($attribute, Yii::t('denchotsanov.user', 'Your account has been deactivated, please contact support for details.'));
-            } elseif ($user && $user->status === UserStatus::STATUS_PENDING) {
-                $this->addError($attribute, Yii::t('denchotsanov.user', 'Your account not confirm, please check your mail or contact support for details.'));
-            } elseif (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, Yii::t('denchotsanov.user', 'Incorrect email or password.'));
-            }
-        }
+        if ($this->user === null || !Password::validate($this->password, $this->user->password_hash))
+            $this->addError($attribute, Yii::t('user', 'Invalid login or password'));
     }
     /**
-     * Logs in a user using the provided username and password.
-     *
      * @return bool whether the user is logged in successfully
      */
     public function login()
     {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        if ($this->validate() && $this->user) {
+            $isLogged = Yii::$app->getUser()->login($this->user, $this->rememberMe ? $this->module->rememberFor : 0);
+            if ($isLogged) {
+                $this->user->updateAttributes(['last_login_at' => time()]);
+            }
+            return $isLogged;
+        }
+        return false;
+    }
+    /** @inheritdoc */
+    public function formName()
+    {
+        return 'login-form';
+    }
+    /** @inheritdoc */
+    public function beforeValidate()
+    {
+        if (parent::beforeValidate()) {
+            $this->user = $this->finder->findUserByUsernameOrEmail(trim($this->login));
+            return true;
         } else {
             return false;
         }
-    }
-    /**
-     * Finds user by [[email]]
-     *
-     * @return UserModel|null
-     */
-    public function getUser()
-    {
-        if ($this->_user === false) {
-            $this->_user = UserModel::findByEmail($this->email);
-        }
-        return $this->_user;
     }
 }
