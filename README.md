@@ -17,7 +17,6 @@ Installation
 ------------
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
-
 Either run
 
 ```
@@ -30,36 +29,19 @@ or add
 to the require section of your composer.json.
         
 
-Configuration
-=============
-1) If you use this extension, then you need execute migration by the following command:
-```
-php yii migrate/up --migrationPath=@vendor/denchotsanov/yii2-user/migrations
-```
-or
 
-add in console config file add 
-```
-'controllerMap' => [
-        'migrate' => [
-            'class' => 'yii\console\controllers\MigrateController',
-            'migrationPath' => [
-                '@app/migrations',
-                '@vendor/denchotsanov/yii2-user/migrations',
-                ...
-            ],
-        ],
-    ],
-```
-2) You need to configure the `params` section in your project configuration:
-```php
-'params' => [
-   'user.passwordResetTokenExpire' => 3600
-]
-```
-3) Your need to create the UserModel class that be extends of [UserModel](https://github.com/denchotsanov/yii2-user/blob/master/models/BaseUserModel.php) and configure the property `identityClass` for `user` component in your project configuration, for example:
-```php
-'user' => [
-    'identityClass' => 'denchotsanov\user\models\User',    
-],
-```
+## Getting Started
+
+- [Installation](docs/getting-started.md)
+- [Configuration](docs/configuration.md)
+- [List with actions](docs/available-actions.md)
+- [Console commands](docs/console.md)
+- [F.A.Q.](docs/faq.md)
+
+## Guides
+
+- [User Managemnt](docs/user-managemnt.md)
+- [Login with Social Netword](docs/auth-social.md)
+- [Mailer](docs/mailer.md)
+- [Adding new filed to user model](docs/add-new-field-to-user.md)
+- [How to add Profile field to the registration form](docs/adding-profile-fields-to-registration-form.md)
