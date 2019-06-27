@@ -2,6 +2,7 @@
 namespace denchotsanov\user\controllers;
 
 use denchotsanov\user\Finder;
+use denchotsanov\user\models\RegistrationForm;
 use denchotsanov\user\models\User;
 use denchotsanov\user\traits\AjaxValidationTrait;
 use denchotsanov\user\traits\EventTrait;
@@ -53,6 +54,7 @@ class RegistrationController extends Controller
      * @return string
      * @throws \yii\web\HttpException
      * @throws \yii\base\InvalidConfigException
+     * @throws \Yii\base\ExitException
      */
     public function actionRegister()
     {

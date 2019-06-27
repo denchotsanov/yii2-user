@@ -52,6 +52,7 @@ class RecoveryController
      * @return string
      * @throws \yii\web\NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
+     * @throws Yii\base\ExitException
      */
     public function actionRequest()
     {
@@ -83,7 +84,11 @@ class RecoveryController
      * @param string $code
      *
      * @return string
-     * @throws \yii\web\NotFoundHttpException
+     * @throws NotFoundHttpException
+     * @throws Yii\base\Exception
+     * @throws Yii\base\ExitException
+     * @throws Yii\db\StaleObjectException
+     * @throws \Throwable
      * @throws \yii\base\InvalidConfigException
      */
     public function actionReset($id, $code)

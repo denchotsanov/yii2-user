@@ -298,6 +298,7 @@ class AdminController extends Controller
      * @return Response
      * @throws NotFoundHttpException
      * @throws yii\base\InvalidConfigException
+     * @throws yii\base\Exception
      */
     public function actionBlock($id)
     {
