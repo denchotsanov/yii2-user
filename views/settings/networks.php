@@ -1,6 +1,6 @@
 <?php
 
-use dektrium\user\widgets\Connect;
+use denchotsanov\user\widgets\Connect;
 use yii\helpers\Html;
 /**
  * @var $this yii\web\View

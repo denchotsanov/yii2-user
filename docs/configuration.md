@@ -10,7 +10,7 @@ The configuration should be applied in your main configuration file:
 'modules' => [
     ...
     'user' => [
-        'class' => 'dektrium\user\Module',
+        'class' => 'denchotsanov\user\Module',
         'enableUnconfirmedLogin' => true,
         'confirmWithin' => 21600,
         'cost' => 12,
