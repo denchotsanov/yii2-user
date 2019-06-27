@@ -1,6 +1,6 @@
 <?php
 
-namespace denchotsanov\user\migrations;
+use denchotsanov\user\migrations\Migration;
 
 class m190523_220351_init extends Migration
 {

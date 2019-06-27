@@ -1,8 +1,6 @@
 <?php
 
-
-namespace denchotsanov\user\migrations;
-
+use denchotsanov\user\migrations\Migration;
 
 class m190624_213615_create_token_table extends Migration
 {

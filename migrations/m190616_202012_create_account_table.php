@@ -1,7 +1,6 @@
 <?php
 
-namespace denchotsanov\user\migrations;
-
+use denchotsanov\user\migrations\Migration;
 
 class m190616_202012_create_account_table extends Migration
 {
