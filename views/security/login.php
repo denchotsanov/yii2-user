@@ -1,6 +1,5 @@
 <?php
-;
-
+use denchotsanov\user\widgets\Connect;
 use denchotsanov\user\models\LoginForm;
 use denchotsanov\user\Module;
 use yii\helpers\Html;
