@@ -3,6 +3,7 @@
 
 namespace denchotsanov\user;
 
+use denchotsanov\user\models\AccountQuery;
 use yii\base\BaseObject;
 use yii\db\ActiveQuery;
 
