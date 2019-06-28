@@ -23,5 +23,8 @@
         "psr-4": {
             "denchotsanov\\user\\": ""
         }
+    },
+    "extra": {
+        "bootstrap": "denchotsanov\\user\\Bootstrap"
     }
 }
