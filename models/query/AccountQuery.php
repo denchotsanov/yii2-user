@@ -1,7 +1,8 @@
 <?php
-namespace denchotsanov\user\models;
+namespace denchotsanov\user\models\query;
 
 use denchotsanov\user\clients\ClientInterface;
+use denchotsanov\user\models\Account;
 use yii\db\ActiveQuery;
 
 

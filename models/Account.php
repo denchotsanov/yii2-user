@@ -5,6 +5,7 @@ namespace denchotsanov\user\models;
 
 use denchotsanov\user\clients\ClientInterface;
 use denchotsanov\user\Finder;
+use denchotsanov\user\models\query\AccountQuery;
 use denchotsanov\user\traits\ModuleTrait;
 use Yii;
 use yii\authclient\ClientInterface as BaseClientInterface;
