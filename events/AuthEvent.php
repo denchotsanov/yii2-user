@@ -1,21 +1,27 @@
 <?php
 namespace denchotsanov\user\events;
 
-
-use denchotsanov\user\clients\ClientInterface;
 use denchotsanov\user\models\Account;
+use yii\authclient\ClientInterface;
 use yii\base\Event;
 
+/**
+ * @property Account         $account
+ * @property ClientInterface $client
+
+ */
 class AuthEvent extends Event
 {
     /**
      * @var ClientInterface
      */
     private $_client;
+
     /**
      * @var Account
      */
     private $_account;
+
     /**
      * @return Account
      */
@@ -23,6 +29,7 @@ class AuthEvent extends Event
     {
         return $this->_account;
     }
+
     /**
      * @param Account $account
      */
@@ -30,6 +37,7 @@ class AuthEvent extends Event
     {
         $this->_account = $account;
     }
+
     /**
      * @return ClientInterface
      */
@@ -37,6 +45,7 @@ class AuthEvent extends Event
     {
         return $this->_client;
     }
+
     /**
      * @param ClientInterface $client
      */
