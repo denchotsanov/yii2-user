@@ -1,4 +1,5 @@
 <?php
+
 namespace denchotsanov\user\traits;
 
 use denchotsanov\user\events\AuthEvent;
@@ -12,7 +13,6 @@ use denchotsanov\user\models\Profile;
 use denchotsanov\user\models\RecoveryForm;
 use denchotsanov\user\models\Token;
 use denchotsanov\user\models\User;
-use Yii;
 use yii\authclient\ClientInterface;
 use yii\base\Model;
 
@@ -25,8 +25,9 @@ trait EventTrait
      */
     protected function getFormEvent(Model $form)
     {
-        return Yii::createObject(['class' => FormEvent::class, 'form' => $form]);
+        return \Yii::createObject(['class' => FormEvent::className(), 'form' => $form]);
     }
+
     /**
      * @param  User      $user
      * @return UserEvent
@@ -34,8 +35,9 @@ trait EventTrait
      */
     protected function getUserEvent(User $user)
     {
-        return Yii::createObject(['class' => UserEvent::class, 'user' => $user]);
+        return \Yii::createObject(['class' => UserEvent::className(), 'user' => $user]);
     }
+
     /**
      * @param  Profile      $profile
      * @return ProfileEvent
@@ -43,8 +45,10 @@ trait EventTrait
      */
     protected function getProfileEvent(Profile $profile)
     {
-        return Yii::createObject(['class' => ProfileEvent::class, 'profile' => $profile]);
+        return \Yii::createObject(['class' => ProfileEvent::className(), 'profile' => $profile]);
     }
+
+
     /**
      * @param  Account      $account
      * @param  User         $user
@@ -53,8 +57,9 @@ trait EventTrait
      */
     protected function getConnectEvent(Account $account, User $user)
     {
-        return Yii::createObject(['class' => ConnectEvent::class, 'account' => $account, 'user' => $user]);
+        return \Yii::createObject(['class' => ConnectEvent::className(), 'account' => $account, 'user' => $user]);
     }
+
     /**
      * @param  Account         $account
      * @param  ClientInterface $client
@@ -63,8 +68,9 @@ trait EventTrait
      */
     protected function getAuthEvent(Account $account, ClientInterface $client)
     {
-        return Yii::createObject(['class' => AuthEvent::class, 'account' => $account, 'client' => $client]);
+        return \Yii::createObject(['class' => AuthEvent::className(), 'account' => $account, 'client' => $client]);
     }
+
     /**
      * @param  Token        $token
      * @param  RecoveryForm $form
@@ -73,6 +79,6 @@ trait EventTrait
      */
     protected function getResetPasswordEvent(Token $token = null, RecoveryForm $form = null)
     {
-        return Yii::createObject(['class' => ResetPasswordEvent::class, 'token' => $token, 'form' => $form]);
+        return \Yii::createObject(['class' => ResetPasswordEvent::className(), 'token' => $token, 'form' => $form]);
     }
 }

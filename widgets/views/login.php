@@ -1,15 +1,16 @@
 <?php
 
-use denchotsanov\user\models\LoginForm;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
+
 /**
  * @var yii\web\View                   $this
  * @var yii\widgets\ActiveForm         $form
- * @var LoginForm $model
+ * @var denchotsanov\user\models\LoginForm $model
  * @var string                         $action
  */
+
 ?>
 
 <?php if (Yii::$app->user->isGuest): ?>
@@ -22,9 +23,13 @@ use yii\helpers\Html;
         'validateOnType'         => false,
         'validateOnChange'       => false,
     ]) ?>
+
     <?= $form->field($model, 'login')->textInput(['placeholder' => 'Login']) ?>
+
     <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Password']) ?>
+
     <?= $form->field($model, 'rememberMe')->checkbox() ?>
+
     <?= Html::submitButton(Yii::t('user', 'Sign in'), ['class' => 'btn btn-primary btn-block']) ?>
 
     <?php ActiveForm::end(); ?>

@@ -1,10 +1,8 @@
 <?php
 
-
 namespace denchotsanov\user\traits;
 
-use Yii;
-use yii\base\Module;
+use denchotsanov\user\Module;
 
 /**
  * Trait ModuleTrait
@@ -14,14 +12,19 @@ use yii\base\Module;
  */
 trait ModuleTrait
 {
-    /** @return Module */
+    /**
+     * @return Module
+     */
     public function getModule()
     {
-        return Yii::$app->getModule('user');
+        return \Yii::$app->getModule('user');
     }
-    /** @return string */
+
+    /**
+     * @return string
+     */
     public static function getDb()
     {
-        return Yii::$app->getModule('user')->getDb();
+        return \Yii::$app->getModule('user')->getDb();
     }
 }

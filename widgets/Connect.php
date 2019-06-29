@@ -12,13 +12,15 @@ use yii\helpers\Url;
 class Connect extends AuthChoice
 {
     /**
-     * @var array|null
+     * @var array|null An array of user's accounts
      */
     public $accounts;
+
     /**
      * @inheritdoc
      */
     public $options = [];
+
     /**
      * @inheritdoc
      */
@@ -31,6 +33,7 @@ class Connect extends AuthChoice
         $this->options['id'] = $this->getId();
         echo Html::beginTag('div', $this->options);
     }
+
     /**
      * @inheritdoc
      */
@@ -42,8 +45,12 @@ class Connect extends AuthChoice
             return parent::createClientUrl($provider);
         }
     }
+
     /**
+     * Checks if provider already connected to user.
+     *
      * @param ClientInterface $provider
+     *
      * @return bool
      */
     public function isConnected(ClientInterface $provider)
