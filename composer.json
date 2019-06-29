@@ -15,9 +15,8 @@
         "fxp/composer-asset-plugin":"^1.4.0",
         "yiisoft/yii2": "^2.0.18",
         "yiisoft/yii2-authclient": "^2.1.0",
-        "yiisoft/yii2-jui": "~2.0",
-        "yiisoft/yii2-bootstrap": "^2.0.0",
-        "2amigos/yii2-arrayquery-component": "~1.0"
+        "yiisoft/yii2-swiftmailer": "^2.0.0",
+        "yiisoft/yii2-bootstrap": "^2.0.0"
     },
     "autoload": {
         "psr-4": {
@@ -25,6 +24,10 @@
         }
     },
     "extra": {
-        "bootstrap": "denchotsanov\\user\\Bootstrap"
+        "bootstrap": "denchotsanov\\user\\Bootstrap",
+        "branch-alias": {
+            "dev-master": "2.0.X-dev",
+            "dev-develop": "2.0.x-dev"
+        }
     }
 }
