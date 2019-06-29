@@ -1,21 +1,20 @@
 <?php
+
 namespace denchotsanov\user\commands;
 
 use denchotsanov\user\Finder;
 use Yii;
-use yii\base\Module;
 use yii\console\Controller;
 use yii\helpers\Console;
-/**
- * @property Module $module
- */
+
 class DeleteController extends Controller
 {
     /** @var Finder */
     protected $finder;
+
     /**
      * @param string           $id
-     * @param yii\base\Module $module
+     * @param \yii\base\Module $module
      * @param Finder           $finder
      * @param array            $config
      */
@@ -26,6 +25,8 @@ class DeleteController extends Controller
     }
 
     /**
+     * Deletes a user.
+     *
      * @param string $search Email or username
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException

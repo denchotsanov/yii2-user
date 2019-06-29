@@ -1,6 +1,5 @@
 <?php
 
-
 namespace denchotsanov\user\commands;
 
 use denchotsanov\user\Finder;
@@ -12,9 +11,10 @@ class PasswordController extends Controller
 {
     /** @var Finder */
     protected $finder;
+
     /**
      * @param string           $id
-     * @param yii\base\Module $module
+     * @param \yii\base\Module $module
      * @param Finder           $finder
      * @param array            $config
      */
@@ -25,9 +25,10 @@ class PasswordController extends Controller
     }
 
     /**
-     * @param string $search Email or username
+     * Updates user's password to given.
+     *
+     * @param string $search   Email or username
      * @param string $password New password
-     * @throws Yii\base\Exception
      */
     public function actionIndex($search, $password)
     {

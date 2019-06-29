@@ -1,21 +1,23 @@
 <?php
+
 namespace denchotsanov\user\commands;
 
 use denchotsanov\user\models\User;
-use denchotsanov\user\Module;
 use Yii;
 use yii\console\Controller;
 use yii\helpers\Console;
-/**
- * @property Module $module
- */
+
 class CreateController extends Controller
 {
     /**
+     * This command creates new user account. If password is not set, this command will generate new 8-char password.
+     * After saving user to database, this command uses mailer component to send credentials (username and password) to
+     * user via email.
+     *
      * @param string $email Email address
      * @param string $username Username
      * @param null|string $password Password (if null it will be generated automatically)
-     * @throws yii\base\InvalidConfigException
+     * @throws \yii\base\InvalidConfigException
      */
     public function actionIndex($email, $username, $password = null)
     {
@@ -26,6 +28,7 @@ class CreateController extends Controller
             'username' => $username,
             'password' => $password,
         ]);
+
         if ($user->create()) {
             $this->stdout(Yii::t('user', 'User has been created') . "!\n", Console::FG_GREEN);
         } else {

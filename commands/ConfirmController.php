@@ -1,21 +1,20 @@
 <?php
+
 namespace denchotsanov\user\commands;
 
 use denchotsanov\user\Finder;
 use Yii;
-use yii\base\Module;
 use yii\console\Controller;
 use yii\helpers\Console;
-/**
- * @property Module $module
- */
+
 class ConfirmController extends Controller
 {
     /** @var Finder */
     protected $finder;
+
     /**
      * @param string           $id
-     * @param yii\base\Module $module
+     * @param \yii\base\Module $module
      * @param Finder           $finder
      * @param array            $config
      */
@@ -24,7 +23,10 @@ class ConfirmController extends Controller
         $this->finder = $finder;
         parent::__construct($id, $module, $config);
     }
+
     /**
+     * Confirms a user by setting confirmed_at field to current time.
+     *
      * @param string $search Email or username
      */
     public function actionIndex($search)
