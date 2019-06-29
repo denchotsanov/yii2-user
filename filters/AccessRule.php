@@ -1,22 +1,18 @@
 <?php
-/**
- * User: dencho
- */
 
 namespace denchotsanov\user\filters;
 
-use yii\filters\AccessRule as YiiAccessRule;
-
-class AccessRule extends YiiAccessRule
+class AccessRule extends \yii\filters\AccessRule
 {
     /**
      * @inheritdoc
-     */
+     * */
     protected function matchRole($user)
     {
         if (empty($this->roles)) {
             return true;
         }
+
         foreach ($this->roles as $role) {
             if ($role === '?') {
                 if (\Yii::$app->user->isGuest) {
@@ -34,6 +30,7 @@ class AccessRule extends YiiAccessRule
                 return true;
             }
         }
+
         return false;
     }
 }

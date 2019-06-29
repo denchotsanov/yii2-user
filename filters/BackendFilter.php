@@ -1,4 +1,5 @@
 <?php
+
 namespace denchotsanov\user\filters;
 
 use yii\web\NotFoundHttpException;
@@ -10,6 +11,7 @@ class BackendFilter extends ActionFilter
      * @var array
      */
     public $controllers = ['profile', 'recovery', 'registration', 'settings'];
+
     /**
      * @param \yii\base\Action $action
      *
@@ -21,6 +23,7 @@ class BackendFilter extends ActionFilter
         if (in_array($action->controller->id, $this->controllers)) {
             throw new NotFoundHttpException('Not found');
         }
+
         return true;
     }
 }
