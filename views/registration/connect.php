@@ -1,15 +1,15 @@
 <?php
 
-use denchotsanov\user\models\Account;
-use denchotsanov\user\models\User;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
- * @var User $model
- * @var Account $account
+ * @var denchotsanov\user\models\User $model
+ * @var denchotsanov\user\models\Account $account
  */
+
 $this->title = Yii::t('user', 'Sign in');
 $this->params['breadcrumbs'][] = $this->title;
 ?>

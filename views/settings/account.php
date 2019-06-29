@@ -1,13 +1,14 @@
 <?php
 
-use denchotsanov\user\models\SettingsForm;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
- * @var SettingsForm $model
+ * @var denchotsanov\user\models\SettingsForm $model
  */
+
 $this->title = Yii::t('user', 'Account settings');
 $this->params['breadcrumbs'][] = $this->title;
 ?>

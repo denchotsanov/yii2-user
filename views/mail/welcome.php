@@ -1,13 +1,11 @@
 <?php
 
-use denchotsanov\user\models\Token;
-use denchotsanov\user\models\User;
-use denchotsanov\user\Module;
 use yii\helpers\Html;
+
 /**
- * @var Module $module
- * @var User $user
- * @var Token $token
+ * @var denchotsanov\user\Module $module
+ * @var denchotsanov\user\models\User $user
+ * @var denchotsanov\user\models\Token $token
  * @var bool $showPassword
  */
 ?>

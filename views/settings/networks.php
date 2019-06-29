@@ -2,10 +2,12 @@
 
 use denchotsanov\user\widgets\Connect;
 use yii\helpers\Html;
+
 /**
  * @var $this yii\web\View
  * @var $form yii\widgets\ActiveForm
  */
+
 $this->title = Yii::t('user', 'Networks');
 $this->params['breadcrumbs'][] = $this->title;
 ?>

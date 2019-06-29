@@ -1,14 +1,13 @@
 <?php
 
-use denchotsanov\user\models\Profile;
-use denchotsanov\user\models\User;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+
 /**
-* @var yii\web\View $this
-* @var User $user
-* @var Profile $profile
-*/
+ * @var yii\web\View $this
+ * @var denchotsanov\user\models\User $user
+ * @var denchotsanov\user\models\Profile $profile
+ */
 ?>
 
 <?php $this->beginContent('@denchotsanov/user/views/admin/update.php', ['user' => $user]) ?>

@@ -2,9 +2,10 @@
 
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+
 /**
  * @var yii\web\View $this
- * @var User $user
+ * @var denchotsanov\user\models\User $user
  */
 ?>
 
@@ -23,11 +24,11 @@ use yii\helpers\Html;
 
 <?= $this->render('_user', ['form' => $form, 'user' => $user]) ?>
 
-    <div class="form-group">
-        <div class="col-lg-offset-3 col-lg-9">
-            <?= Html::submitButton(Yii::t('user', 'Update'), ['class' => 'btn btn-block btn-success']) ?>
-        </div>
+<div class="form-group">
+    <div class="col-lg-offset-3 col-lg-9">
+        <?= Html::submitButton(Yii::t('user', 'Update'), ['class' => 'btn btn-block btn-success']) ?>
     </div>
+</div>
 
 <?php ActiveForm::end(); ?>
 

@@ -1,6 +1,13 @@
 <?php
 
+use denchotsanov\rbac\widgets\Assignments;
+
+/**
+ * @var yii\web\View $this
+ * @var denchotsanov\user\models\User $user
+ */
 ?>
+
 <?php $this->beginContent('@denchotsanov/user/views/admin/update.php', ['user' => $user]) ?>
 
 <?= yii\bootstrap\Alert::widget([

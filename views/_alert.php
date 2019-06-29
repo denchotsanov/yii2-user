@@ -1,9 +1,9 @@
 <?php
 
-use denchotsanov\user\Module;
 use yii\bootstrap\Alert;
+
 /**
- * @var Module $module
+ * @var denchotsanov\user\Module $module
  */
 ?>
 

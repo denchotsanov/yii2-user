@@ -1,13 +1,14 @@
 <?php
 
-use denchotsanov\user\models\User;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Nav;
 use yii\helpers\Html;
+
 /**
  * @var yii\web\View $this
- * @var User $user
+ * @var denchotsanov\user\models\User $user
  */
+
 $this->title = Yii::t('user', 'Create a user account');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('user', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;

@@ -1,14 +1,16 @@
 <?php
+
 use denchotsanov\user\widgets\Connect;
 use denchotsanov\user\models\LoginForm;
-use denchotsanov\user\Module;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+
 /**
  * @var yii\web\View $this
- * @var LoginForm $model
- * @var Module $module
+ * @var denchotsanov\user\models\LoginForm $model
+ * @var denchotsanov\user\Module $module
  */
+
 $this->title = Yii::t('user', 'Sign in');
 $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -1,9 +1,7 @@
 <?php
 
-use denchotsanov\user\models\Token;
-use yii\helpers\Html;
 /**
- * @var Token $token
+ * @var denchotsanov\user\models\Token $token
  */
 ?>
 <?= Yii::t('user', 'Hello') ?>,

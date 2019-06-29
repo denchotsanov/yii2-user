@@ -1,13 +1,14 @@
 <?php
 
-use denchotsanov\user\models\RecoveryForm;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
- * @var RecoveryForm $model
+ * @var denchotsanov\user\models\RecoveryForm $model
  */
+
 $this->title = Yii::t('user', 'Recover your password');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -23,8 +24,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'enableAjaxValidation' => true,
                     'enableClientValidation' => false,
                 ]); ?>
+
                 <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
+
                 <?= Html::submitButton(Yii::t('user', 'Continue'), ['class' => 'btn btn-primary btn-block']) ?><br>
+
                 <?php ActiveForm::end(); ?>
             </div>
         </div>

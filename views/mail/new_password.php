@@ -1,12 +1,13 @@
 <?php
-use denchotsanov\user\helpers\Password;
-use denchotsanov\user\models\User;
-use denchotsanov\user\Module;
+
+use yii\helpers\Html;
+
 /**
- * @var Module          $module
- * @var User     $user
- * @var Password $password
+ * @var denchotsanov\user\Module          $module
+ * @var denchotsanov\user\models\User     $user
+ * @var denchotsanov\user\models\Password $password
  */
+
 ?>
 <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">
     <?= Yii::t('user', 'Hello') ?>,

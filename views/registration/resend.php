@@ -1,12 +1,13 @@
 <?php
 
-use denchotsanov\user\models\ResendForm;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+
 /**
  * @var yii\web\View $this
- * @var ResendForm $model
+ * @var denchotsanov\user\models\ResendForm $model
  */
+
 $this->title = Yii::t('user', 'Request new confirmation message');
 $this->params['breadcrumbs'][] = $this->title;
 ?>

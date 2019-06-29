@@ -1,15 +1,16 @@
 <?php
 
-use denchotsanov\user\helpers\Timezone;
-use denchotsanov\user\models\Profile;
 use yii\helpers\Html;
+use denchotsanov\user\helpers\Timezone;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
+
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
- * @var Profile $model
+ * @var denchotsanov\user\models\Profile $model
  */
+
 $this->title = Yii::t('user', 'Profile settings');
 $this->params['breadcrumbs'][] = $this->title;
 ?>

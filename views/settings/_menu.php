@@ -1,11 +1,12 @@
 <?php
 
-use denchotsanov\user\models\User;
 use yii\helpers\Html;
 use denchotsanov\user\widgets\UserMenu;
+
 /**
- * @var User $user
+ * @var denchotsanov\user\models\User $user
  */
+
 $user = Yii::$app->user->identity;
 ?>
 <div class="panel panel-default">
@@ -19,6 +20,6 @@ $user = Yii::$app->user->identity;
         </h3>
     </div>
     <div class="panel-body">
-        <?php echo UserMenu::widget() ?>
+        <?= UserMenu::widget() ?>
     </div>
 </div>

@@ -1,9 +1,13 @@
 <?php
+
 /**
  * @var yii\web\View $this
  * @var denchotsanov\user\models\User $user
  */
-$this->beginContent('@denchotsanov/user/views/admin/update.php', ['user' => $user]) ?>
+?>
+
+<?php $this->beginContent('@denchotsanov/user/views/admin/update.php', ['user' => $user]) ?>
+
 <table class="table">
     <tr>
         <td><strong><?= Yii::t('user', 'Registration time') ?>:</strong></td>
@@ -36,4 +40,5 @@ $this->beginContent('@denchotsanov/user/views/admin/update.php', ['user' => $use
         <?php endif ?>
     </tr>
 </table>
+
 <?php $this->endContent() ?>

@@ -1,14 +1,14 @@
 <?php
 
-use denchotsanov\user\models\User;
-use denchotsanov\user\Module;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+
 /**
  * @var yii\web\View $this
- * @var User $model
- * @var Module $module
+ * @var denchotsanov\user\models\User $model
+ * @var denchotsanov\user\Module $module
  */
+
 $this->title = Yii::t('user', 'Sign up');
 $this->params['breadcrumbs'][] = $this->title;
 ?>

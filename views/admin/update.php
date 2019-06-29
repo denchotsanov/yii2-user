@@ -1,12 +1,13 @@
 <?php
 
-use denchotsanov\user\models\User;
 use yii\bootstrap\Nav;
+
 /**
- * @var yii\web\View $this
- * @var User $user
+ * @var \yii\web\View $this
+ * @var \denchotsanov\user\models\User $user
  * @var string $content
  */
+
 $this->title = Yii::t('user', 'Update user account');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('user', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -37,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'label' => Yii::t('user', 'Assignments'),
                             'url' => ['/user/admin/assignments', 'id' => $user->id],
-                            'visible' => isset(Yii::$app->extensions['denchotsanov/yii2-user-rbac']),
+                            'visible' => isset(Yii::$app->extensions['denchotsanov/yii2-rbac']),
                         ],
                         '<hr>',
                         [
