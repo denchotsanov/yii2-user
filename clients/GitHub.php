@@ -1,4 +1,5 @@
 <?php
+
 namespace denchotsanov\user\clients;
 
 use yii\authclient\clients\GitHub as BaseGitHub;
@@ -12,6 +13,7 @@ class GitHub extends BaseGitHub implements ClientInterface
             ? $this->getUserAttributes()['email']
             : null;
     }
+
     /** @inheritdoc */
     public function getUsername()
     {
