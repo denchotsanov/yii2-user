@@ -1,9 +1,7 @@
 <?php
 
-
 namespace denchotsanov\user\migrations;
 
-use RuntimeException;
 use Yii;
 
 class Migration extends \yii\db\Migration
@@ -15,6 +13,7 @@ class Migration extends \yii\db\Migration
     protected $restrict = 'RESTRICT';
     protected $cascade = 'CASCADE';
     protected $dbType;
+    
 
     /**
      * @inheritdoc
@@ -22,6 +21,7 @@ class Migration extends \yii\db\Migration
     public function init()
     {
         parent::init();
+
         switch ($this->db->driverName) {
             case 'mysql':
                 $this->tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
@@ -39,10 +39,10 @@ class Migration extends \yii\db\Migration
                 $this->dbType = 'sqlsrv';
                 break;
             default:
-                throw new RuntimeException('Your database is not supported!');
+                throw new \RuntimeException('Your database is not supported!');
         }
     }
-
+    
     public function dropColumnConstraints($table, $column)
     {
         $table = $this->db->schema->getRawTableName($table);
@@ -54,7 +54,7 @@ class Migration extends \yii\db\Migration
                                     WHERE object_id = object_id(:table)
                                     and name = :column
                                 )', [ ':table' => $table, ':column' => $column ]);
-
+                                
         $constraints = $cmd->queryAll();
         foreach ($constraints as $c) {
             $this->execute('ALTER TABLE '.$this->db->quoteTableName($table).' DROP CONSTRAINT '.$this->db->quoteColumnName($c['name']));
