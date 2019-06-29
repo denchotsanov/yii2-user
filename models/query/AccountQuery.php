@@ -1,18 +1,20 @@
 <?php
 namespace denchotsanov\user\models\query;
 
-use denchotsanov\user\clients\ClientInterface;
 use denchotsanov\user\models\Account;
+use yii\authclient\ClientInterface;
 use yii\db\ActiveQuery;
-
 
 /**
  * @method Account|null one($db = null)
  * @method Account[]    all($db = null)
-  */
+ *
+
+ */
 class AccountQuery extends ActiveQuery
 {
     /**
+     * Finds an account by code.
      * @param  string       $code
      * @return AccountQuery
      */
@@ -20,7 +22,9 @@ class AccountQuery extends ActiveQuery
     {
         return $this->andWhere(['code' => md5($code)]);
     }
+
     /**
+     * Finds an account by id.
      * @param  integer      $id
      * @return AccountQuery
      */
@@ -28,7 +32,9 @@ class AccountQuery extends ActiveQuery
     {
         return $this->andWhere(['id' => $id]);
     }
+
     /**
+     * Finds an account by user_id.
      * @param  integer      $userId
      * @return AccountQuery
      */
@@ -36,7 +42,9 @@ class AccountQuery extends ActiveQuery
     {
         return $this->andWhere(['user_id' => $userId]);
     }
+
     /**
+     * Finds an account by client.
      * @param  ClientInterface $client
      * @return AccountQuery
      */

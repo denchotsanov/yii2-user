@@ -1,15 +1,14 @@
 <?php
-
-
 namespace denchotsanov\user\models;
 
 use denchotsanov\user\traits\ModuleTrait;
-use RuntimeException;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\Url;
 
 /**
+ * Token Active Record model.
+ *
  * @property integer $user_id
  * @property string  $code
  * @property integer $created_at
@@ -22,10 +21,12 @@ use yii\helpers\Url;
 class Token extends ActiveRecord
 {
     use ModuleTrait;
+
     const TYPE_CONFIRMATION      = 0;
     const TYPE_RECOVERY          = 1;
     const TYPE_CONFIRM_NEW_EMAIL = 2;
     const TYPE_CONFIRM_OLD_EMAIL = 3;
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -33,6 +34,7 @@ class Token extends ActiveRecord
     {
         return $this->hasOne($this->module->modelMap['User'], ['id' => 'user_id']);
     }
+
     /**
      * @return string
      */
@@ -52,8 +54,10 @@ class Token extends ActiveRecord
             default:
                 throw new \RuntimeException();
         }
+
         return Url::to([$route, 'id' => $this->user_id, 'code' => $this->code], true);
     }
+
     /**
      * @return bool Whether token has expired.
      */
@@ -69,10 +73,12 @@ class Token extends ActiveRecord
                 $expirationTime = $this->module->recoverWithin;
                 break;
             default:
-                throw new RuntimeException();
+                throw new \RuntimeException();
         }
+
         return ($this->created_at + $expirationTime) < time();
     }
+
     /** @inheritdoc */
     public function beforeSave($insert)
     {
@@ -81,13 +87,16 @@ class Token extends ActiveRecord
             $this->setAttribute('created_at', time());
             $this->setAttribute('code', Yii::$app->security->generateRandomString());
         }
+
         return parent::beforeSave($insert);
     }
+
     /** @inheritdoc */
     public static function tableName()
     {
         return '{{%token}}';
     }
+
     /** @inheritdoc */
     public static function primaryKey()
     {

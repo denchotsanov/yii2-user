@@ -1,5 +1,6 @@
 <?php
 namespace denchotsanov\user\models;
+
 use denchotsanov\user\Finder;
 use denchotsanov\user\helpers\Password;
 use denchotsanov\user\traits\ModuleTrait;
@@ -8,32 +9,56 @@ use yii\helpers\Html;
 use Yii;
 use yii\base\Model;
 
-
+/**
+ * LoginForm get user's login and password, validates them and logs the user in. If user has been blocked, it adds
+ * an error to login form.
+ */
 class LoginForm extends Model
 {
     use ModuleTrait;
+
+    /** @var string User's email or username */
     public $login;
+
+    /** @var string User's plain password */
     public $password;
+
+    /** @var string Whether to remember the user */
     public $rememberMe = false;
+
+    /** @var \denchotsanov\user\models\User */
     protected $user;
+
+    /** @var Finder */
     protected $finder;
+
+    /**
+     * @param Finder $finder
+     * @param array  $config
+     */
     public function __construct(Finder $finder, $config = [])
     {
         $this->finder = $finder;
         parent::__construct($config);
     }
+
     /**
+     * Gets all users to generate the dropdown list when in debug mode.
+     *
      * @return array
      */
     public static function loginList()
     {
-
+        /** @var \denchotsanov\user\Module $module */
         $module = \Yii::$app->getModule('user');
+
         $userModel = $module->modelMap['User'];
+
         return ArrayHelper::map($userModel::find()->where(['blocked_at' => null])->all(), 'username', function ($user) {
             return sprintf('%s (%s)', Html::encode($user->username), Html::encode($user->email));
         });
     }
+
     /** @inheritdoc */
     public function attributeLabels()
     {
@@ -43,6 +68,7 @@ class LoginForm extends Model
             'rememberMe' => Yii::t('user', 'Remember me next time'),
         ];
     }
+
     /** @inheritdoc */
     public function rules()
     {
@@ -66,6 +92,7 @@ class LoginForm extends Model
             ],
             'rememberMe' => ['rememberMe', 'boolean'],
         ];
+
         if (!$this->module->debug) {
             $rules = array_merge($rules, [
                 'requiredFields' => [['login', 'password'], 'required'],
@@ -79,40 +106,55 @@ class LoginForm extends Model
                 ]
             ]);
         }
+
         return $rules;
     }
+
     /**
+     * Validates if the hash of the given password is identical to the saved hash in the database.
+     * It will always succeed if the module is in DEBUG mode.
+     *
      * @return void
      */
     public function validatePassword($attribute, $params)
     {
-        if ($this->user === null || !Password::validate($this->password, $this->user->password_hash))
-            $this->addError($attribute, Yii::t('user', 'Invalid login or password'));
+      if ($this->user === null || !Password::validate($this->password, $this->user->password_hash))
+        $this->addError($attribute, Yii::t('user', 'Invalid login or password'));
     }
+
     /**
+     * Validates form and logs the user in.
+     *
      * @return bool whether the user is logged in successfully
      */
     public function login()
     {
         if ($this->validate() && $this->user) {
             $isLogged = Yii::$app->getUser()->login($this->user, $this->rememberMe ? $this->module->rememberFor : 0);
+
             if ($isLogged) {
                 $this->user->updateAttributes(['last_login_at' => time()]);
             }
+
             return $isLogged;
         }
+
         return false;
     }
+
+
     /** @inheritdoc */
     public function formName()
     {
         return 'login-form';
     }
+
     /** @inheritdoc */
     public function beforeValidate()
     {
         if (parent::beforeValidate()) {
             $this->user = $this->finder->findUserByUsernameOrEmail(trim($this->login));
+
             return true;
         } else {
             return false;

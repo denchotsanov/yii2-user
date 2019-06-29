@@ -3,21 +3,37 @@ namespace denchotsanov\user\models;
 
 use denchotsanov\user\Finder;
 use denchotsanov\user\Mailer;
-use Yii;
 use yii\base\Model;
 
+/**
+ * Model for collecting data on password recovery.
+ *
+ */
 class RecoveryForm extends Model
 {
     const SCENARIO_REQUEST = 'request';
     const SCENARIO_RESET = 'reset';
-    /** @var string */
+
+    /**
+     * @var string
+     */
     public $email;
-    /** @var string */
+
+    /**
+     * @var string
+     */
     public $password;
-    /** @var Mailer */
+
+    /**
+     * @var Mailer
+     */
     protected $mailer;
-    /** @var Finder */
+
+    /**
+     * @var Finder
+     */
     protected $finder;
+
     /**
      * @param Mailer $mailer
      * @param Finder $finder
@@ -29,15 +45,21 @@ class RecoveryForm extends Model
         $this->finder = $finder;
         parent::__construct($config);
     }
-    /** @inheritdoc */
+
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
-            'email'    => Yii::t('user', 'Email'),
-            'password' => Yii::t('user', 'Password'),
+            'email'    => \Yii::t('user', 'Email'),
+            'password' => \Yii::t('user', 'Password'),
         ];
     }
-    /** @inheritdoc */
+
+    /**
+     * @inheritdoc
+     */
     public function scenarios()
     {
         return [
@@ -45,7 +67,10 @@ class RecoveryForm extends Model
             self::SCENARIO_RESET => ['password'],
         ];
     }
-    /** @inheritdoc */
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
@@ -58,61 +83,72 @@ class RecoveryForm extends Model
     }
 
     /**
+     * Sends recovery message.
+     *
      * @return bool
-     * @throws \yii\base\InvalidConfigException
      */
     public function sendRecoveryMessage()
     {
         if (!$this->validate()) {
             return false;
         }
+
         $user = $this->finder->findUserByEmail($this->email);
+
         if ($user instanceof User) {
             /** @var Token $token */
-            $token = Yii::createObject([
-                'class' => Token::class,
+            $token = \Yii::createObject([
+                'class' => Token::className(),
                 'user_id' => $user->id,
                 'type' => Token::TYPE_RECOVERY,
             ]);
+
             if (!$token->save(false)) {
                 return false;
             }
+
             if (!$this->mailer->sendRecoveryMessage($user, $token)) {
                 return false;
             }
         }
-        Yii::$app->session->setFlash(
+
+        \Yii::$app->session->setFlash(
             'info',
-            Yii::t('user', 'An email has been sent with instructions for resetting your password')
+            \Yii::t('user', 'An email has been sent with instructions for resetting your password')
         );
+
         return true;
     }
 
     /**
+     * Resets user's password.
+     *
      * @param Token $token
      *
      * @return bool
-     * @throws Yii\base\Exception
-     * @throws \Throwable
-     * @throws yii\db\StaleObjectException
      */
     public function resetPassword(Token $token)
     {
         if (!$this->validate() || $token->user === null) {
             return false;
         }
+
         if ($token->user->resetPassword($this->password)) {
-            Yii::$app->session->setFlash('success', Yii::t('user', 'Your password has been changed successfully.'));
+            \Yii::$app->session->setFlash('success', \Yii::t('user', 'Your password has been changed successfully.'));
             $token->delete();
         } else {
-            Yii::$app->session->setFlash(
+            \Yii::$app->session->setFlash(
                 'danger',
-                Yii::t('user', 'An error occurred and your password has not been changed. Please try again later.')
+                \Yii::t('user', 'An error occurred and your password has not been changed. Please try again later.')
             );
         }
+
         return true;
     }
-    /** @inheritdoc */
+
+    /**
+     * @inheritdoc
+     */
     public function formName()
     {
         return 'recovery-form';
