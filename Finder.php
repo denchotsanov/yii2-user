@@ -1,67 +1,83 @@
 <?php
 
-
 namespace denchotsanov\user;
 
-use denchotsanov\user\models\AccountQuery;
+use denchotsanov\user\models\query\AccountQuery;
+use denchotsanov\user\models\Token;
+use yii\authclient\ClientInterface;
 use yii\base\BaseObject;
 use yii\db\ActiveQuery;
 
-/**
- * Finder provides some useful methods for finding active record models.
- *
- */
 class Finder extends BaseObject
 {
     /** @var ActiveQuery */
     protected $userQuery;
+
     /** @var ActiveQuery */
     protected $tokenQuery;
+
     /** @var AccountQuery */
     protected $accountQuery;
+
     /** @var ActiveQuery */
     protected $profileQuery;
 
-    /** @return ActiveQuery */
+    /**
+     * @return ActiveQuery
+     */
     public function getUserQuery()
     {
         return $this->userQuery;
     }
-    /** @return ActiveQuery */
+
+    /**
+     * @return ActiveQuery
+     */
     public function getTokenQuery()
     {
         return $this->tokenQuery;
     }
-    /** @return ActiveQuery */
+
+    /**
+     * @return ActiveQuery
+     */
     public function getAccountQuery()
     {
         return $this->accountQuery;
     }
-    /** @return ActiveQuery */
+
+    /**
+     * @return ActiveQuery
+     */
     public function getProfileQuery()
     {
         return $this->profileQuery;
     }
+
     /** @param ActiveQuery $accountQuery */
     public function setAccountQuery(ActiveQuery $accountQuery)
     {
         $this->accountQuery = $accountQuery;
     }
+
     /** @param ActiveQuery $userQuery */
     public function setUserQuery(ActiveQuery $userQuery)
     {
         $this->userQuery = $userQuery;
     }
+
     /** @param ActiveQuery $tokenQuery */
     public function setTokenQuery(ActiveQuery $tokenQuery)
     {
         $this->tokenQuery = $tokenQuery;
     }
+
     /** @param ActiveQuery $profileQuery */
     public function setProfileQuery(ActiveQuery $profileQuery)
     {
         $this->profileQuery = $profileQuery;
     }
+
     /**
      * Finds a user by the given id.
      *
@@ -73,6 +89,7 @@ class Finder extends BaseObject
     {
         return $this->findUser(['id' => $id])->one();
     }
+
     /**
      * Finds a user by the given username.
      *
@@ -84,6 +101,7 @@ class Finder extends BaseObject
     {
         return $this->findUser(['username' => $username])->one();
     }
+
     /**
      * Finds a user by the given email.
      *
@@ -95,6 +113,7 @@ class Finder extends BaseObject
     {
         return $this->findUser(['email' => $email])->one();
     }
+
     /**
      * Finds a user by the given username or email.
      *
@@ -107,8 +126,10 @@ class Finder extends BaseObject
         if (filter_var($usernameOrEmail, FILTER_VALIDATE_EMAIL)) {
             return $this->findUserByEmail($usernameOrEmail);
         }
+
         return $this->findUserByUsername($usernameOrEmail);
     }
+
     /**
      * Finds a user by the given condition.
      *
@@ -120,6 +141,7 @@ class Finder extends BaseObject
     {
         return $this->userQuery->where($condition);
     }
+
     /**
      * @return AccountQuery
      */
@@ -127,6 +149,7 @@ class Finder extends BaseObject
     {
         return $this->accountQuery;
     }
+
     /**
      * Finds an account by id.
      *
@@ -138,6 +161,7 @@ class Finder extends BaseObject
     {
         return $this->accountQuery->where(['id' => $id])->one();
     }
+
     /**
      * Finds a token by user id and code.
      *
@@ -149,6 +173,7 @@ class Finder extends BaseObject
     {
         return $this->tokenQuery->where($condition);
     }
+
     /**
      * Finds a token by params.
      *
@@ -166,6 +191,7 @@ class Finder extends BaseObject
             'type'    => $type,
         ])->one();
     }
+
     /**
      * Finds a profile by user id.
      *
@@ -177,6 +203,7 @@ class Finder extends BaseObject
     {
         return $this->findProfile(['user_id' => $id])->one();
     }
+
     /**
      * Finds a profile.
      *

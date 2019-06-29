@@ -1,39 +1,53 @@
 <?php
+
 namespace denchotsanov\user;
 
 use denchotsanov\user\models\Token;
 use denchotsanov\user\models\User;
 use Yii;
 use yii\base\Component;
-use yii\mail\BaseMailer;
 
 class Mailer extends Component
 {
+    /** @var string */
     public $viewPath = '@denchotsanov/user/views/mail';
+
     /** @var string|array Default: `Yii::$app->params['adminEmail']` OR `no-reply@example.com` */
     public $sender;
-    /** @var BaseMailer Default: `Yii::$app->mailer` */
+
+    /** @var \yii\mail\BaseMailer Default: `Yii::$app->mailer` */
     public $mailerComponent;
+
     /** @var string */
     protected $welcomeSubject;
+
     /** @var string */
     protected $newPasswordSubject;
+
     /** @var string */
     protected $confirmationSubject;
+
     /** @var string */
     protected $reconfirmationSubject;
+
     /** @var string */
     protected $recoverySubject;
-    /** @var Module */
+
+    /** @var \denchotsanov\user\Module */
     protected $module;
-    /** @return string */
+
+    /**
+     * @return string
+     */
     public function getWelcomeSubject()
     {
         if ($this->welcomeSubject == null) {
             $this->setWelcomeSubject(Yii::t('user', 'Welcome to {0}', Yii::$app->name));
         }
+
         return $this->welcomeSubject;
     }
+
     /**
      * @param string $welcomeSubject
      */
@@ -41,6 +55,7 @@ class Mailer extends Component
     {
         $this->welcomeSubject = $welcomeSubject;
     }
+
     /**
      * @return string
      */
@@ -49,8 +64,10 @@ class Mailer extends Component
         if ($this->newPasswordSubject == null) {
             $this->setNewPasswordSubject(Yii::t('user', 'Your password on {0} has been changed', Yii::$app->name));
         }
+
         return $this->newPasswordSubject;
     }
+
     /**
      * @param string $newPasswordSubject
      */
@@ -58,6 +75,7 @@ class Mailer extends Component
     {
         $this->newPasswordSubject = $newPasswordSubject;
     }
+
     /**
      * @return string
      */
@@ -66,8 +84,10 @@ class Mailer extends Component
         if ($this->confirmationSubject == null) {
             $this->setConfirmationSubject(Yii::t('user', 'Confirm account on {0}', Yii::$app->name));
         }
+
         return $this->confirmationSubject;
     }
+
     /**
      * @param string $confirmationSubject
      */
@@ -75,6 +95,7 @@ class Mailer extends Component
     {
         $this->confirmationSubject = $confirmationSubject;
     }
+
     /**
      * @return string
      */
@@ -83,8 +104,10 @@ class Mailer extends Component
         if ($this->reconfirmationSubject == null) {
             $this->setReconfirmationSubject(Yii::t('user', 'Confirm email change on {0}', Yii::$app->name));
         }
+
         return $this->reconfirmationSubject;
     }
+
     /**
      * @param string $reconfirmationSubject
      */
@@ -92,6 +115,7 @@ class Mailer extends Component
     {
         $this->reconfirmationSubject = $reconfirmationSubject;
     }
+
     /**
      * @return string
      */
@@ -100,8 +124,10 @@ class Mailer extends Component
         if ($this->recoverySubject == null) {
             $this->setRecoverySubject(Yii::t('user', 'Complete password reset on {0}', Yii::$app->name));
         }
+
         return $this->recoverySubject;
     }
+
     /**
      * @param string $recoverySubject
      */
@@ -109,6 +135,7 @@ class Mailer extends Component
     {
         $this->recoverySubject = $recoverySubject;
     }
+
     /** @inheritdoc */
     public function init()
     {
@@ -190,6 +217,7 @@ class Mailer extends Component
         } else {
             $email = $user->email;
         }
+
         return $this->sendMessage(
             $email,
             $this->getReconfirmationSubject(),
@@ -231,11 +259,13 @@ class Mailer extends Component
         $mailer = $this->mailerComponent === null ? Yii::$app->mailer : Yii::$app->get($this->mailerComponent);
         $mailer->viewPath = $this->viewPath;
         $mailer->getView()->theme = Yii::$app->view->theme;
+
         if ($this->sender === null) {
             $this->sender = isset(Yii::$app->params['adminEmail']) ?
                 Yii::$app->params['adminEmail']
                 : 'no-reply@example.com';
         }
+
         return $mailer->compose(['html' => $view, 'text' => 'text/' . $view], $params)
             ->setTo($to)
             ->setFrom($this->sender)

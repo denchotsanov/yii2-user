@@ -1,4 +1,5 @@
 <?php
+
 namespace denchotsanov\user;
 
 use Yii;
@@ -22,6 +23,7 @@ class Bootstrap implements BootstrapInterface
         'RecoveryForm'     => 'denchotsanov\user\models\RecoveryForm',
         'UserSearch'       => 'denchotsanov\user\models\UserSearch',
     ];
+
     /** @inheritdoc */
     public function bootstrap($app)
     {
@@ -40,12 +42,14 @@ class Bootstrap implements BootstrapInterface
                     });
                 }
             }
-            Yii::$container->setSingleton(Finder::class, [
+
+            Yii::$container->setSingleton(Finder::className(), [
                 'userQuery'    => Yii::$container->get('UserQuery'),
                 'profileQuery' => Yii::$container->get('ProfileQuery'),
                 'tokenQuery'   => Yii::$container->get('TokenQuery'),
                 'accountQuery' => Yii::$container->get('AccountQuery'),
             ]);
+
             if ($app instanceof ConsoleApplication) {
                 $module->controllerNamespace = 'denchotsanov\user\commands';
             } else {
@@ -54,33 +58,42 @@ class Bootstrap implements BootstrapInterface
                     'loginUrl' => ['/user/security/login'],
                     'identityClass' => $module->modelMap['User'],
                 ]);
+
                 $configUrlRule = [
                     'prefix' => $module->urlPrefix,
                     'rules'  => $module->urlRules,
                 ];
+
                 if ($module->urlPrefix != 'user') {
                     $configUrlRule['routePrefix'] = 'user';
                 }
+
                 $configUrlRule['class'] = 'yii\web\GroupUrlRule';
                 $rule = Yii::createObject($configUrlRule);
+
                 $app->urlManager->addRules([$rule], false);
+
                 if (!$app->has('authClientCollection')) {
                     $app->set('authClientCollection', [
-                        'class' => Collection::class,
+                        'class' => Collection::className(),
                     ]);
                 }
             }
+
             if (!isset($app->get('i18n')->translations['user*'])) {
                 $app->get('i18n')->translations['user*'] = [
-                    'class' => PhpMessageSource::class,
+                    'class' => PhpMessageSource::className(),
                     'basePath' => __DIR__ . '/messages',
                     'sourceLanguage' => 'en-US'
                 ];
             }
+
             Yii::$container->set('denchotsanov\user\Mailer', $module->mailer);
+
             $module->debug = $this->ensureCorrectDebugSetting();
         }
     }
+
     /** Ensure the module is not in DEBUG mode on production environments */
     public function ensureCorrectDebugSetting()
     {
@@ -96,6 +109,7 @@ class Bootstrap implements BootstrapInterface
         if (defined('YII_DEBUG') && YII_DEBUG !== true) {
             return false;
         }
+
         return Yii::$app->getModule('user')->debug;
     }
 }
