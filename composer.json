@@ -3,6 +3,7 @@
     "type": "yii2-extenstion",
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "license": "MIT",
     "authors": [
         {
             "name": "Dencho Tsanov",
