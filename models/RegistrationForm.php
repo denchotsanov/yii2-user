@@ -33,6 +33,7 @@ class RegistrationForm extends Model
      */
     public function rules()
     {
+
         $user = $this->module->modelMap['User'];
 
         return [

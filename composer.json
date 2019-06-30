@@ -26,7 +26,7 @@
     "extra": {
         "bootstrap": "denchotsanov\\user\\Bootstrap",
         "branch-alias": {
-            "dev-master": "2.0.X-dev",
+            "dev-master": "2.0.x-dev",
             "dev-develop": "2.0.x-dev"
         }
     }
