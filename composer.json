@@ -1,6 +1,6 @@
 {
     "name": "denchotsanov/yii2-user",
-    "type": "yii2-extenstion",
+    "type": "yii2-extension",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "license": "MIT",
