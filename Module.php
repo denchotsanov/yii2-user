@@ -6,7 +6,7 @@ use yii\base\Module as BaseModule;
 
 class Module extends BaseModule
 {
-    const VERSION = '2.0.7';
+    const VERSION = '2.1.5';
 
     /** Email is changed right after user enter's new email address. */
     const STRATEGY_INSECURE = 0;
